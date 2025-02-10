@@ -1,0 +1,25 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Hadou Moderator",
+    "description": "Kicks out naughty children.",
+    "uuid": "8911e2af-70e7-4a2d-a348-7e3c49821632",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 19, 50]
+  },
+  "modules": [
+    {
+      "type": "script",
+      "uuid": "6079cf52-1971-4250-ba84-f6c83153f1db",
+      "version": [1, 0, 0],
+      "entry": "scripts/chat_moderation.js"
+    }
+  ],
+  "capabilities": [],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.5.0"
+    }
+  ]
+}
