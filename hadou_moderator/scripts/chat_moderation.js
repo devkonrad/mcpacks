@@ -1,41 +1,30 @@
-import * as mc from "@minecraft/server";
+import { world } from "@minecraft/server";
 
-// Debug: Verificando se o script foi carregado corretamente
-console.log("Hadou Moderator script loaded successfully!");
+// Lista de palavras proibidas
+const badWords = ["badword1", "badword2", "badword3"];
 
-const badWords = [
-    "badword1", 
-    "badword2", 
-    "badword3"
-];
-
-// Monitor chat messages
-mc.world.events.chatSendBefore.subscribe((event) => {
-    let message = event.message.toLowerCase();
+world.beforeEvents.chatSend.subscribe((event) => {
+    let message = event.message;
     let sender = event.sender;
+    let censoredMessage = message;
 
-    // Debug: Exibir mensagem recebida
-    console.log(`Received message: "${message}" from ${sender.name}`);
+    // Verifica se a mensagem contém uma palavra proibida e censura
+    let foundBadWord = false;
+    badWords.forEach(word => {
+        if (message.toLowerCase().includes(word)) {
+            let regex = new RegExp(word, "gi");
+            censoredMessage = censoredMessage.replace(regex, "*".repeat(word.length));
+            foundBadWord = true;
+        }
+    });
 
-    // Verificar se a mensagem contém palavras proibidas
-    if (badWords.some(word => message.includes(word))) {
-        console.log(`Bad word detected! Cancelling message and kicking ${sender.name}`);
+    if (foundBadWord) {
+        event.cancel = true; // Bloqueia a mensagem original
 
-        event.cancel = true; // Bloquear a mensagem
+        // Envia a versão censurada no chat
+        world.sendMessage(`§7${sender.name}: ${censoredMessage}`);
 
-        // Enviar mensagem de aviso ao jogador
-        sender.runCommandAsync(`tellraw @s {"rawtext":[{"text":"§cYou have been kicked for using a banned word!"}]}`);
-
-        // Notificar todos os jogadores
-        mc.world.sendMessage(`§c[MOD] ${sender.name} has been kicked for using a banned word!`);
-
-        // Expulsar o jogador
-        sender.runCommandAsync(`kick "${sender.name}"`);
-
-        // Debug: Confirmar que o jogador foi expulso
-        console.log(`${sender.name} has been kicked.`);
-    } else {
-        // Debug: Se nenhuma palavra proibida for encontrada
-        console.log(`No bad words detected in the message from ${sender.name}.`);
+        // Avisa o jogador de que sua mensagem foi censurada
+        sender.sendMessage(`§c[AVISO] Sua mensagem continha palavras inadequadas e foi censurada.`);
     }
 });

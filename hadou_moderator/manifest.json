@@ -16,6 +16,12 @@
   },
   "modules": [
     {
+      "description": "Behavior Pack Module",
+      "type": "data",
+      "uuid": "479e03c6-ce79-4a7a-838e-54718f529473",
+      "version": [1, 0, 0]
+    },
+    {
       "type": "script",
       "language": "javascript",
       "uuid": "6079cf52-1971-4250-ba84-f6c83153f1db",
@@ -26,11 +32,7 @@
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "1.13.0"
-    },
-    {
-        "module_name": "@minecraft/server-ui",
-        "version": "1.2.0"
+      "version": "1.21.30"
     }
   ]
 }
