@@ -11,7 +11,6 @@
     "name": "Hadou Moderator",
     "description": "Kicks out naughty children.",
     "uuid": "8911e2af-70e7-4a2d-a348-7e3c49821632",
-    "pack_scope": "world",
     "version": [ 0, 0, 1 ],
     "min_engine_version": [ 1, 21, 20 ]
   },

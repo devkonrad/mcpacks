@@ -4,7 +4,7 @@ import * as mc from "@minecraft/server";
 console.log("Hadou Moderator script loaded successfully!");
 
 const badWords = [
-    "badword1", 
+    "caralho", 
     "badword2", 
     "badword3"
 ];
